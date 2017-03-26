@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.OverridesAttribute;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +36,11 @@ public class SearchController {
                                 ListController.columnChoices.get(column) + " Values");
             model.addAttribute("jobs", jobs);
 
+        }
+        else if(ListController.columnChoices.get(column).equals("All")){
+            ArrayList<HashMap<String, String>> jobs=JobData.findByValue(value);
+            model.addAttribute("title", "Jobs with"+ value);
+            model.addAttribute("jobs", jobs);
         }
         else{
             ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(column, value);
